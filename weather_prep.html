@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -76,20 +110,137 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This report analyzes the weather extremes in Singapore for the year 2023, highlighting significant weather conditions across different regions.</p>
 </section>
-<section id="running-code" class="level2">
-<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<p>You can add options to executable code like this</p>
+<section id="load-the-data" class="level1">
+<h1>Load the data</h1>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weather_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"full_year_weather_data.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="view-the-first-few-rows-of-the-data" class="level1">
+<h1>View the first few rows of the data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<pre><code># A tibble: 6 × 12
+  Location  Month   Date  `Daily Rainfall Total (mm)` Highest 30-min Rainfall …¹
+  &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;                     
+1 Admiralty January 1 Jan 0.0                         0.0                       
+2 Admiralty January 2 Jan 0.0                         0.0                       
+3 Admiralty January 3 Jan 0.2                         0.2                       
+4 Admiralty January 4 Jan 0.0                         0.0                       
+5 Admiralty January 5 Jan 3.4                         3.2                       
+6 Admiralty January 6 Jan 0.4                         0.2                       
+# ℹ abbreviated name: ¹​`Highest 30-min Rainfall (mm)`
+# ℹ 7 more variables: `Highest 60-min Rainfall (mm)` &lt;chr&gt;,
+#   `Highest 120-min Rainfall (mm)` &lt;chr&gt;, `Mean Temperature (°C)` &lt;chr&gt;,
+#   `Maximum Temperature (°C)` &lt;chr&gt;, `Minimum Temperature (°C)` &lt;chr&gt;,
+#   `Mean Wind Speed (km/h)` &lt;chr&gt;, `Max Wind Speed (km/h)` &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+</section>
+<section id="data-cleaning-steps" class="level1">
+<h1>Data cleaning steps</h1>
+</section>
+<section id="convert-date-columns-to-date-type" class="level1">
+<h1>Convert date columns to Date type</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>weather_data <span class="ot">&lt;-</span> weather_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">as_date</span>(Date, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `Date = as_date(Date, format = "%Y-%m-%d")`.
+Caused by warning:
+!  17520 failed to parse.</code></pre>
+</div>
+</div>
+</section>
+<section id="summary-of-data-to-check-for-any-inconsistencies" class="level1">
+<h1>Summary of data to check for any inconsistencies</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Location            Month                Date      
+ Length:17520       Length:17520       Min.   :NA     
+ Class :character   Class :character   1st Qu.:NA     
+ Mode  :character   Mode  :character   Median :NA     
+                                       Mean   :NaN    
+                                       3rd Qu.:NA     
+                                       Max.   :NA     
+                                       NA's   :17520  
+ Daily Rainfall Total (mm) Highest 30-min Rainfall (mm)
+ Length:17520              Length:17520                
+ Class :character          Class :character            
+ Mode  :character          Mode  :character            
+                                                       
+                                                       
+                                                       
+                                                       
+ Highest 60-min Rainfall (mm) Highest 120-min Rainfall (mm)
+ Length:17520                 Length:17520                 
+ Class :character             Class :character             
+ Mode  :character             Mode  :character             
+                                                           
+                                                           
+                                                           
+                                                           
+ Mean Temperature (°C) Maximum Temperature (°C) Minimum Temperature (°C)
+ Length:17520          Length:17520             Length:17520            
+ Class :character      Class :character         Class :character        
+ Mode  :character      Mode  :character         Mode  :character        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+ Mean Wind Speed (km/h) Max Wind Speed (km/h)
+ Length:17520           Length:17520         
+ Class :character       Class :character     
+ Mode  :character       Mode  :character     
+                                             
+                                             
+                                             
+                                             </code></pre>
+</div>
+</div>
+</section>
+<section id="create-the-improved-visualization" class="level1">
+<h1>Create the improved visualization</h1>
+</section>
+<section id="use-ggplot2-or-any-other-suitable-library" class="level1">
+<h1>Use ggplot2 or any other suitable library</h1>
+</section>
+<section id="example-data-frame-for-demonstration-replace-with-actual-data-structure" class="level1">
+<h1>Example data frame for demonstration (replace with actual data structure)</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>weather_extremes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Region =</span> <span class="fu">c</span>(<span class="st">"Woodlands"</span>, <span class="st">"Ang Mo Kio"</span>, <span class="st">"Pulau Ubin"</span>, <span class="st">"Pasir Panjang"</span>, <span class="st">"Newton"</span>, <span class="st">"Kallang"</span>, <span class="st">"East Coast Parkway"</span>, <span class="st">"East Coast Parkway"</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Event =</span> <span class="fu">c</span>(<span class="st">"Wettest month"</span>, <span class="st">"Hottest day"</span>, <span class="st">"Coolest month"</span>, <span class="st">"Strongest wind gust"</span>, <span class="st">"Coolest day"</span>, <span class="st">"Wettest day"</span>, <span class="st">"Hottest month"</span>, <span class="st">"Driest month"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Measurement =</span> <span class="fu">c</span>(<span class="fl">569.4</span>, <span class="dv">37</span>, <span class="dv">26</span>, <span class="dv">85</span>, <span class="fl">21.1</span>, <span class="fl">225.5</span>, <span class="fl">29.8</span>, <span class="fl">39.8</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Date =</span> <span class="fu">c</span>(<span class="st">"December"</span>, <span class="st">"May 13"</span>, <span class="st">"January"</span>, <span class="st">"May 16"</span>, <span class="st">"March 1"</span>, <span class="st">"Feb 28"</span>, <span class="st">"May"</span>, <span class="st">"October"</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(<span class="fl">569.4</span>, <span class="dv">37</span>, <span class="dv">26</span>, <span class="dv">85</span>, <span class="fl">21.1</span>, <span class="fl">225.5</span>, <span class="fl">29.8</span>, <span class="fl">39.8</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(weather_extremes, <span class="fu">aes</span>(<span class="at">x=</span>Region, <span class="at">y=</span>Measurement, <span class="at">fill=</span>Event)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"purple"</span>, <span class="st">"brown"</span>, <span class="st">"yellow"</span>, <span class="st">"pink"</span>)) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Weather Extremes in Singapore 2023"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Temperature, Rainfall, and Wind Gusts"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Region"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Measurement"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">"Event"</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="weather_prep_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 
 </main>
