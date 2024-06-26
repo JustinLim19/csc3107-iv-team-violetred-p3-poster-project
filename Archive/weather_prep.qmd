@@ -1,0 +1,67 @@
+---
+title: "Weather Extremes in Singapore 2023"
+author: "Team Violetred"
+date: "2024-05-24"
+format: html
+---
+
+## Introduction
+This report analyzes the weather extremes in Singapore for the year 2023, highlighting significant weather conditions across different regions.
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(readxl)
+library(tidyverse)
+library(lubridate)
+```
+
+# Load the data
+
+```{r}
+weather_data <- read_excel("full_year_weather_data.xlsx")
+```
+
+# View the first few rows of the data
+
+```{r}
+head(weather_data)
+```
+
+# Data cleaning steps
+# Convert date columns to Date type
+
+```{r}
+weather_data <- weather_data %>%
+  mutate(Date = as_date(Date, format = "%Y-%m-%d"))
+```
+
+# Summary of data to check for any inconsistencies
+
+```{r}
+summary(weather_data)
+```
+
+# Create the improved visualization
+# Use ggplot2 or any other suitable library
+
+# Example data frame for demonstration (replace with actual data structure)
+```{r}
+weather_extremes <- data.frame(
+  Region = c("Woodlands", "Ang Mo Kio", "Pulau Ubin", "Pasir Panjang", "Newton", "Kallang", "East Coast Parkway", "East Coast Parkway"),
+  Event = c("Wettest month", "Hottest day", "Coolest month", "Strongest wind gust", "Coolest day", "Wettest day", "Hottest month", "Driest month"),
+  Measurement = c(569.4, 37, 26, 85, 21.1, 225.5, 29.8, 39.8),
+  Date = c("December", "May 13", "January", "May 16", "March 1", "Feb 28", "May", "October"),
+  Value = c(569.4, 37, 26, 85, 21.1, 225.5, 29.8, 39.8)
+)
+
+ggplot(weather_extremes, aes(x=Region, y=Measurement, fill=Event)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values=c("blue", "red", "green", "orange", "purple", "brown", "yellow", "pink")) +
+  labs(title="Weather Extremes in Singapore 2023",
+       subtitle="Temperature, Rainfall, and Wind Gusts",
+       x="Region",
+       y="Measurement",
+       fill="Event") +
+  theme_minimal() +
+  theme(legend.position="bottom")
+```

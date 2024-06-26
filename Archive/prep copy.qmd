@@ -1,14 +1,7 @@
 ---
-title: "Weather Extremes in Singapore 2023"
-author: "Team Violetred"
-date: "2024-05-24"
+title: "Untitled"
 format: html
 ---
-
-## Introduction
-This report analyzes the weather extremes in Singapore for the year 2023, highlighting significant weather conditions across different regions. 
-
-The code below requires the following packages:
 
 ```{r}
 #| label: setup
@@ -23,8 +16,8 @@ library(sf)
 library(tibble)
 library(dplyr)
 library(geojsonsf)
-library(viridis) # For color-blind friendly palette
-library(ggspatial) # For north arrow and scale bar
+library(viridis)  # For color-blind friendly palette
+library(ggspatial)  # For north arrow and scale bar
 ```
 
 ```{r}
@@ -78,7 +71,6 @@ list(hottest_day, coolest_day, wettest_month, driest_month, strongest_wind_gust)
 ```
 
 ```{r}
-# Define location coordinates and events data
 location_coords <- data.frame(
   Location = c("Woodlands", "Ang Mo Kio", "Pulau Ubin", "Pasir Panjang", "Newton", "Kallang", "East Coast Parkway"),
   Longitude = c(103.78, 103.85, 103.95, 103.76, 103.83, 103.87, 103.94),
@@ -92,91 +84,45 @@ events_data <- tibble(
     "Strongest Wind (85 km/h)", "Coolest (21.2°C)", "Wettest (225.5mm)",
     "Hottest (29.8°C)"
   ),
+  Color = c("blue", "red", "cyan", "green", "purple", "blue", "orange"),
   Date = c("December", "May 13", "January", "May 16", "March 1", "February 28", "May"),
-  Type = c("Rainfall", "Temperature (Hot)", "Temperature (Cool)", "Wind Speed", "Temperature (Cool)", "Rainfall", "Temperature (Hot)"),
-  Magnitude = c(569.4, 37, 26, 85, 21.2, 225.5, 29.8)
+  Type = c("Rainfall", "Temperature", "Temperature", "Wind Speed", "Temperature", "Rainfall", "Temperature")
 )
 
 location_coords <- location_coords %>%
   left_join(events_data, by = "Location")
 
-# Custom color palette
 event_colors <- c(
-  "Rainfall" = "#5ab4ac",
-  "Temperature (Cool)" = "#4575b4",
-  "Temperature (Hot)" = "#d73027",
-  "Wind Speed" = "#91bfdb"
+  "Coolest (21.2°C)" = "purple",
+  "Hottest (37°C)" = "red",
+  "Strongest Wind (85 km/h)" = "green",
+  "Coolest (26°C)" = "cyan",
+  "Hottest (29.8°C)" = "orange",
+  "Wettest (569.4mm)" = "blue",
+  "Wettest (225.5mm)" = "blue"
 )
 
 # Read the GeoJSON file
 singapore_map <- geojson_sf("sg.geojson")
 
-# Create the plot
+# Plotting the improved visualization with Singapore map outline
 ggplot() +
-  # Base map
-  geom_sf(data = singapore_map, fill = "ivory", color = "gray80", size = 0.2) +
-
-  # Events
-  geom_point(
-    data = location_coords,
-    aes(x = Longitude, y = Latitude, color = Type, size = Magnitude),
-    alpha = 0.8
-  ) +
-
-  # Labels
+  geom_sf(data = singapore_map, fill = "white", color = "black", alpha = 0.3) +
+  geom_point(data = location_coords, aes(x = Longitude, y = Latitude, color = Event), size = 5) +
   geom_label_repel(
-    data = location_coords,
-    aes(
-      x = Longitude, y = Latitude,
-      label = paste0(Location, "\n", Event, "\n", Date)
-    ),
-    size = 2.5, box.padding = 0.5, point.padding = 0.3,
-    segment.color = "grey50", force = 10, max.overlaps = Inf,
-    fill = "white", color = "black"
+    data = location_coords, aes(x = Longitude, y = Latitude, label = paste(Location, "\n", Event, "\n", Date)),
+    size = 2.5, box.padding = 0.35, point.padding = 0.3, segment.color = "grey50",
+    nudge_y = 0.02, nudge_x = 0.02, max.overlaps = Inf, fill = "white"
   ) +
-
-  # Scales
-  scale_color_manual(values = event_colors, name = "Event Type") +
-  scale_size_continuous(range = c(3, 10), name = "Magnitude") +
-
-  # Theme and labels
+  scale_color_manual(values = event_colors, name = "Weather Events") +
   theme_minimal() +
-  labs(
-    title = "Weather Extremes in Singapore (2023)",
-    subtitle = "Highlighting the most significant weather events across different locations",
-    x = "Longitude",
-    y = "Latitude",
-    caption = "Map Source: Singapore GeoJSON"
-  ) +
-
-  # Adjust theme elements
+  labs(title = "Weather Extremes in Singapore (2023)", x = "Longitude", y = "Latitude") +
   theme(
-    plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
-    plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
-    legend.position = "right",
+    legend.position = "bottom",
     legend.box = "vertical",
-    legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+    legend.margin = margin(t = 0, r = 20, b = 0, l = 20),
     plot.margin = unit(c(1, 1, 1, 1), "cm"),
-    text = element_text(size = 10),
-    panel.grid = element_blank(),
-    axis.text = element_blank(),
-    axis.title = element_blank()
+    text = element_text(size = 12)
   ) +
-
-  # Guides
-  guides(
-    color = guide_legend(override.aes = list(size = 5)),
-    size = guide_legend(override.aes = list(color = "gray30"))
-  ) +
-
-  # Add north arrow and scale bar
-  annotation_north_arrow(
-    location = "bl", which_north = "true",
-    pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in"),
-    style = north_arrow_minimal
-  ) +
-  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
-
-  # Set coordinate limits
-  coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
+  guides(color = guide_legend(ncol = 2, byrow = TRUE))
 ```

@@ -1,0 +1,113 @@
+---
+title: "Testing"
+format: html
+---
+
+
+```{r setup, include=FALSE}
+# Set a CRAN mirror
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+
+# Function to install and load required packages
+install_and_load <- function(packages) {
+  installed_packages <- rownames(installed.packages())
+  for (pkg in packages) {
+    if (!(pkg %in% installed_packages)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
+  }
+}
+```
+
+# Display the summary statistics of the dataset
+```{r}
+packages <- c("readxl", "ggplot2", "dplyr", "lubridate", "stringr")
+```
+
+```{r}
+install_and_load(packages)
+```
+
+# Display the summary statistics of the dataset
+```{r}
+weather_data <- read_excel("full_year_weather_data.xlsx")
+```
+
+# Display the first few rows of the dataset
+```{r}
+head(weather_data)
+```
+
+```{r}
+# Check the structure of the data to understand the date format
+str(weather_data)
+```
+
+# Convert 'Date' column to Date format
+```{r}
+weather_data <- weather_data %>%
+  mutate(
+    Date = dmy(Date),
+    `Daily Rainfall Total (mm)` = as.numeric(`Daily Rainfall Total (mm)`),
+    `Highest 30-min Rainfall (mm)` = as.numeric(`Highest 30-min Rainfall (mm)`),
+    `Highest 60-min Rainfall (mm)` = as.numeric(`Highest 60-min Rainfall (mm)`),
+    `Highest 120-min Rainfall (mm)` = as.numeric(`Highest 120-min Rainfall (mm)`),
+    `Mean Temperature (°C)` = as.numeric(`Mean Temperature (°C)`),
+    `Maximum Temperature (°C)` = as.numeric(`Maximum Temperature (°C)`),
+    `Minimum Temperature (°C)` = as.numeric(`Minimum Temperature (°C)`),
+    `Mean Wind Speed (km/h)` = as.numeric(`Mean Wind Speed (km/h)`),
+    `Max Wind Speed (km/h)` = as.numeric(`Max Wind Speed (km/h)`)
+  )
+```
+
+```{r}
+# Remove rows with invalid dates
+weather_data <- weather_data %>%
+  filter(!is.na(Date) & !is.na(`Daily Rainfall Total (mm)`) & !is.na(`Mean Temperature (°C)`))
+```
+
+# Display summary statistics
+```{r}
+summary(weather_data)
+```
+
+# Time series plot for mean temperature
+```{r}
+ggplot(weather_data, aes(x = Date, y = `Mean Temperature (°C)`, color = Location)) +
+  geom_line() +
+  labs(title = "Mean Temperature Over Time", x = "Date", y = "Mean Temperature (°C)") +
+  theme_minimal()
+```
+
+# Calculate total rainfall for each month and location
+```{r}
+monthly_rainfall <- weather_data %>%
+  group_by(Location, Month) %>%
+  summarise(Total_Rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE))
+```
+
+
+# Identify the wettest month
+```{r}
+wettest_month <- monthly_rainfall %>%
+  group_by(Month) %>%
+  summarise(Total_Rainfall = sum(Total_Rainfall, na.rm = TRUE)) %>%
+  filter(Total_Rainfall == max(Total_Rainfall)) %>%
+  pull(Month)
+```
+
+# Filter data for the wettest month
+```{r}
+wettest_month_data <- monthly_rainfall %>%
+  filter(Month == wettest_month)
+```
+
+# Plot the bar chart
+```{r}
+ggplot(wettest_month_data, aes(x = Location, y = Total_Rainfall)) +
+  geom_bar(stat = "identity") +
+  labs(title = paste("Total Rainfall in the Wettest Month (", wettest_month, ")", sep = ""),
+       x = "Location", y = "Total Rainfall (mm)") +
+  theme_minimal()
+```
