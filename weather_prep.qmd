@@ -23,6 +23,7 @@ library(sf)
 library(tibble)
 library(dplyr)
 library(geojsonsf)
+library(scales)
 library(viridis) # For color-blind friendly palette
 library(ggspatial) # For north arrow and scale bar
 ```
@@ -200,10 +201,14 @@ population_data <- population_data %>%
 # Display the cleaned and renamed data
 head(population_data)
 
-# Aggregate the population data by planning area (PA)
+# Select the first row of each distinct Planning Area, which contains the total population
 population_aggregated <- population_data %>%
   group_by(PA) %>%
-  summarise(Pop = sum(Pop, na.rm = TRUE))
+  slice(1) %>%
+  ungroup()
+
+# Display the aggregated population data
+head(population_aggregated)
 ```
 
 ```{r}
@@ -219,7 +224,7 @@ singapore_map <- singapore_map %>%
 ggplot() +
   geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
   # Use viridis palette for perceptual uniformity and accessibility
-  scale_fill_viridis_c(option = "plasma", name = "Population Count") +
+  scale_fill_viridis_c(option = "plasma", name = "Population Count", labels = comma) +
   theme_minimal() +
   labs(title = "Population Density in Singapore (2023)",
        subtitle = "Aggregated by Planning Area",
