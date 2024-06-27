@@ -180,3 +180,60 @@ ggplot() +
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
+
+```{r}
+# Load the population data from the Excel file
+population_data_excel_path <- 'respopagesexfa2023e.xlsx'
+population_data <- read_excel(population_data_excel_path, skip = 2)
+
+# Display the first few rows of the dataset
+head(population_data)
+
+# Rename columns
+population_data <- population_data %>%
+  rename(PA = `Planning Area`, Pop = `2023`)
+
+# Convert Pop column to numeric, coercing any non-numeric values to NA
+population_data <- population_data %>%
+  mutate(Pop = as.numeric(Pop))
+
+# Display the cleaned and renamed data
+head(population_data)
+
+# Aggregate the population data by planning area (PA)
+population_aggregated <- population_data %>%
+  group_by(PA) %>%
+  summarise(Pop = sum(Pop, na.rm = TRUE))
+```
+
+```{r}
+# Load the GeoJSON file
+geojson_path <- 'sg.geojson'
+singapore_map <- st_read(geojson_path)
+
+# Merge population data with geographical data
+singapore_map <- singapore_map %>%
+  left_join(population_aggregated, by = c("planning_area" = "PA"))
+
+# Plot the population density heatmap
+ggplot() +
+  geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
+  # Use viridis palette for perceptual uniformity and accessibility
+  scale_fill_viridis_c(option = "plasma", name = "Population Count") +
+  theme_minimal() +
+  labs(title = "Population Density in Singapore (2023)",
+       subtitle = "Aggregated by Planning Area",
+       x = "Longitude",
+       y = "Latitude",
+       caption = "Source: Singapore Department of Statistics") +
+  theme(plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
+        plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
+        legend.position = "right",
+        legend.box = "vertical",
+        legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+        plot.margin = unit(c(1, 1, 1, 1), "cm"),
+        text = element_text(size = 10),
+        panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank())
+```
