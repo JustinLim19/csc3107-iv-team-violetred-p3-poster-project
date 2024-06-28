@@ -1,5 +1,5 @@
 ---
-title: Visualizing Weather Extremes in 2023
+title: Visualizing Weather Extremes in Singapore 2023
 format:
   poster-typst: 
     size: "33x23" # Approximately A1

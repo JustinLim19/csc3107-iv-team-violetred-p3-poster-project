@@ -19,6 +19,7 @@ library(tidyverse)
 library(readxl)
 library(ggplot2)
 library(ggrepel)
+library(ggimage) # To add the icons above the labels
 library(sf)
 library(tibble)
 library(dplyr)
@@ -95,7 +96,16 @@ events_data <- tibble(
   ),
   Date = c("December", "May 13", "January", "May 16", "March 1", "February 28", "May"),
   Type = c("Rainfall", "Temperature (Hot)", "Temperature (Cool)", "Wind Speed", "Temperature (Cool)", "Rainfall", "Temperature (Hot)"),
-  Magnitude = c(569.4, 37, 26, 85, 21.2, 225.5, 29.8)
+  Magnitude = c(569.4, 37, 26, 85, 21.2, 225.5, 29.8),
+  icon = c(
+    "icons/rainfall_icon.png",
+    "icons/sun_icon.png",
+    "icons/cool_temperature_icon.png",
+    "icons/wind_icon.png",
+    "icons/cool_temperature_icon.png",
+    "icons/rainfall_icon.png",
+    "icons/sun_icon.png"
+  )
 )
 
 location_coords <- location_coords %>%
@@ -136,7 +146,9 @@ ggplot() +
     fill = "white", color = "black"
   ) +
 
-  # Scales
+  # Color and size scales
+  scale_fill_manual(values = event_colors, name = "Event Type") +
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
   scale_color_manual(values = event_colors, name = "Event Type") +
   scale_size_continuous(range = c(3, 10), name = "Magnitude") +
 
@@ -277,6 +289,79 @@ ggplot() +
   labs(
     title = "Weather Extremes in Singapore (2023)",
     subtitle = "Combining population density with significant weather events",
+    x = "Longitude",
+    y = "Latitude",
+    caption = "Source: Singapore Department of Statistics and Weather Data"
+  ) +
+  # Adjust theme elements
+  theme(
+    plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
+    legend.position = "right",
+    legend.box = "vertical",
+    legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    text = element_text(size = 10),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  ) +
+  # Guides for color and size
+  guides(
+    color = guide_legend(override.aes = list(size = 5)),
+    size = guide_legend(override.aes = list(color = "gray30"))
+  ) +
+  # Add north arrow and scale bar
+  annotation_north_arrow(
+    location = "bl", which_north = "true",
+    pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in"),
+    style = north_arrow_minimal
+  ) +
+  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
+  # Set coordinate limits
+  coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
+```
+
+## Adding Icons above the labels for the different weather extremes
+
+```{r}
+# Add icons to the map above
+ggplot() +
+  # Base map for population density
+  geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
+  # Events data
+  geom_point(
+    data = location_coords,
+    aes(x = Longitude, y = Latitude, color = Type),
+    shape = 21, size = 8, alpha = 0.8
+  ) +
+  # Icons for weather events
+  geom_image(
+    data = location_coords,
+    aes(x = Longitude, y = Latitude, image = icon),
+    size = 0.05,   # Adjust size as needed
+    by = "width"   # Ensures the icon sizes are consistent
+  ) +
+  # Labels for weather events
+  geom_label_repel(
+    data = location_coords,
+    aes(
+      x = Longitude, y = Latitude,
+      label = paste0(Location, "\n", Event, "\n", Date)
+    ),
+    size = 2.5, box.padding = 0.5, point.padding = 0.3,
+    segment.color = "grey50", force = 10, max.overlaps = Inf,
+    fill = "white", color = "black"
+  ) +
+  # Color and size scales
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
+  scale_color_manual(values = event_colors, name = "Event Type") +
+  scale_size_continuous(name = "Magnitude") +
+  # Theme and labels
+  theme_minimal() +
+  labs(
+    title = "Weather Extremes in Singapore (2023)",
+    subtitle = "Adding icons to the combined map",
     x = "Longitude",
     y = "Latitude",
     caption = "Source: Singapore Department of Statistics and Weather Data"
