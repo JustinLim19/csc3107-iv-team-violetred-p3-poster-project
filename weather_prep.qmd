@@ -29,12 +29,13 @@ library(viridis) # For color-blind friendly palette
 library(ggspatial) # For north arrow and scale bar
 ```
 
+## Loading the datasets
 ```{r}
-# Load the dataset
-file_path <- "full_year_weather_data.xlsx"
-weather_data <- read_excel(file_path)
+weather_data <- read_excel("full_year_weather_data.xlsx")
+sg_coords <- read_csv("singapore_city_coordinates_improved.csv")
 ```
 
+## Cleaning the datasets
 ```{r}
 # Add the year to the date entries and convert to datetime format
 weather_data <- weather_data %>%
@@ -49,109 +50,178 @@ weather_data <- weather_data %>%
   filter(!is.na(`Daily Rainfall Total (mm)`))
 ```
 
+## Combining the datasets
+```{r}
+sg_coords <- sg_coords |>
+  select(place = `Place`, city = `City`, y = `latitude`, x = `longitude`)
+
+# Join on the "city" column
+join_city <- weather_data %>%
+  left_join(sg_coords, by = c("Location" = "city"))
+
+# Join on the "place" column
+join_place <- weather_data %>%
+  left_join(sg_coords, by = c("Location" = "place"))
+
+
+# Combine the results
+combined_weather_data <- bind_rows(
+  join_city %>% filter(!is.na(x) & !is.na(y)),
+  join_place %>% filter(!is.na(x) & !is.na(y))
+)
+
+combined_weather_data
+```
+
 ```{r}
 # View the cleaned data
-head(weather_data)
+head(combined_weather_data)
+```
+
+## Total Rainfall Analysis
+```{r}
+weather_total_rainfall <- combined_weather_data |>
+  select(location = `Location`, date = `Date`, `Daily Rainfall Total (mm)`, x, y) |>
+  mutate(date = format(date, "%Y-%m")) |>
+  summarise(total_rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE), .by = c(location, date, x, y))
+
+wettest <- weather_total_rainfall |>
+  slice_max(total_rainfall, n = 10, with_ties = FALSE)
+
+driest <- weather_total_rainfall |>
+  slice_min(total_rainfall, n = 10, with_ties = FALSE)
+
+wettest
+driest
+```
+
+## Temperature Analysis
+```{r}
+weather_temperature <- combined_weather_data |>
+  select(location = `Location`, date = `Date`, temp = `Mean Temperature (°C)`, x, y) |>
+  mutate(date = format(date, "%Y-%m"), temp = as.numeric(temp)) |>
+  summarise(mean_temperature = mean(temp, na.rm = TRUE), .by = c(location, date, x, y))
+
+hottest <- weather_temperature |>
+  slice_max(mean_temperature, n = 10, with_ties = FALSE)
+
+coolest <- weather_temperature |>
+  slice_min(mean_temperature, n = 10, with_ties = FALSE)
+
+hottest
+coolest
+```
+
+## Wind Gust Analysis
+```{r}
+weather_wind_speed <- combined_weather_data |> 
+  select(location = `Location`, date = `Date`, wind_speed = `Max Wind Speed (km/h)`, x, y) |>
+  mutate(date = format(date, "%Y-%m"), wind_speed = as.numeric(wind_speed))
+
+weather_wind_speed <- weather_wind_speed |> 
+  slice_max(wind_speed, n = 10, with_ties = FALSE)
+
+weather_wind_speed
 ```
 
 ```{r}
-# Extract key data points
-hottest_day <- weather_data %>%
-  filter(`Mean Temperature (°C)` == max(`Mean Temperature (°C)`, na.rm = TRUE))
+combined_extremes <- bind_rows(
+  wettest %>% mutate(event = "Wettest", amount = total_rainfall),
+  driest %>% mutate(event = "Driest", amount = total_rainfall),
+  hottest %>% mutate(event = "Temperature (Hot)", amount = mean_temperature),
+  coolest %>% mutate(event = "Temperature (Cool)", amount = mean_temperature),
+  weather_wind_speed %>% mutate(event = "Wind Speed", amount = wind_speed)
+)
 
-coolest_day <- weather_data %>%
-  filter(`Mean Temperature (°C)` == min(`Mean Temperature (°C)`, na.rm = TRUE))
-
-wettest_month <- weather_data %>%
-  group_by(month = format(Date, "%Y-%m")) %>%
-  summarise(total_rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE)) %>%
-  filter(total_rainfall == max(total_rainfall, na.rm = TRUE))
-
-driest_month <- weather_data %>%
-  group_by(month = format(Date, "%Y-%m")) %>%
-  summarise(total_rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE)) %>%
-  filter(total_rainfall == min(total_rainfall, na.rm = TRUE))
-
-strongest_wind_gust <- weather_data %>%
-  filter(`Max Wind Speed (km/h)` == max(`Max Wind Speed (km/h)`, na.rm = TRUE))
-
-# Display the extracted data points
-list(hottest_day, coolest_day, wettest_month, driest_month, strongest_wind_gust)
+combined_extremes
 ```
 
+## Preparing for Map Plot
+
 ```{r}
-# Define location coordinates and events data
-location_coords <- data.frame(
-  Location = c("Woodlands", "Ang Mo Kio", "Pulau Ubin", "Pasir Panjang", "Newton", "Kallang", "East Coast Parkway"),
-  Longitude = c(103.78, 103.85, 103.95, 103.76, 103.83, 103.87, 103.94),
-  Latitude = c(1.43, 1.37, 1.41, 1.27, 1.32, 1.30, 1.30)
-)
-
-events_data <- tibble(
-  Location = c("Woodlands", "Ang Mo Kio", "Pulau Ubin", "Pasir Panjang", "Newton", "Kallang", "East Coast Parkway"),
-  Event = c(
-    "Wettest (569.4mm)", "Hottest (37°C)", "Coolest (26°C)",
-    "Strongest Wind (85 km/h)", "Coolest (21.2°C)", "Wettest (225.5mm)",
-    "Hottest (29.8°C)"
-  ),
-  Date = c("December", "May 13", "January", "May 16", "March 1", "February 28", "May"),
-  Type = c("Rainfall", "Temperature (Hot)", "Temperature (Cool)", "Wind Speed", "Temperature (Cool)", "Rainfall", "Temperature (Hot)"),
-  Magnitude = c(569.4, 37, 26, 85, 21.2, 225.5, 29.8),
-  icon = c(
-    "icons/rainfall_icon.png",
-    "icons/sun_icon.png",
-    "icons/cool_temperature_icon.png",
-    "icons/wind_icon.png",
-    "icons/cool_temperature_icon.png",
-    "icons/rainfall_icon.png",
-    "icons/sun_icon.png"
-  )
-)
-
-location_coords <- location_coords %>%
-  left_join(events_data, by = "Location")
-
 # Custom color palette
 event_colors <- c(
-  "Rainfall" = "#5ab4ac",
+  "Wettest" = "#5ab4ac",
+  "Driest" = "#d8b365",
   "Temperature (Cool)" = "#4575b4",
   "Temperature (Hot)" = "#d73027",
   "Wind Speed" = "#91bfdb"
 )
 
+wettest_date <-
+  combined_extremes |>
+  slice_max(total_rainfall, n = 1, with_ties = FALSE) |>
+  mutate(event = "Wettest", amount = total_rainfall)
+
+driest_date <-
+  combined_extremes |>
+  slice_min(total_rainfall, n = 1, with_ties = FALSE) |>
+  mutate(event = "Driest", amount = total_rainfall)
+
+hottest_date <-
+  combined_extremes |>
+  slice_max(mean_temperature, n = 1, with_ties = FALSE) |>
+  mutate(event = "Temperature (Hot)", amount = mean_temperature)
+
+coolest_date <-
+  combined_extremes |>
+  slice_min(mean_temperature, n = 1, with_ties = FALSE) |>
+  mutate(event = "Temperature (Cool)", amount = mean_temperature)
+
+strongest_wind_gust <-
+  combined_extremes |>
+  slice_max(wind_speed, n = 1, with_ties = FALSE) |>
+  mutate(event = "Wind Speed", amount = wind_speed)
+
+labels <- bind_rows(
+  wettest_date, 
+  driest_date, 
+  hottest_date, 
+  coolest_date, 
+  strongest_wind_gust
+) |>
+  mutate(
+    icon = c(
+      "icons/rainfall_icon.png",
+      "icons/dry_icon.jpg",
+      "icons/sun_icon.png",
+      "icons/cool_temperature_icon.png",
+      "icons/wind_icon.png"
+    )
+  )
+
+labels
+```
+
+## Plotting Map
+```{r}
 # Read the GeoJSON file
 singapore_map <- geojson_sf("sg.geojson")
 
 # Create the plot
 ggplot() +
   # Base map
-  geom_sf(data = singapore_map, fill = "ivory", color = "gray80", size = 0.2) +
-
+  geom_sf(data = singapore_map, fill = "ivory", color = "gray80", size = 0.5) +
+  
   # Events
-  geom_point(
-    data = location_coords,
-    aes(x = Longitude, y = Latitude, color = Type, size = Magnitude),
+  geom_count(
+    data = combined_extremes,
+    aes(x = x, y = y, color = event),
     alpha = 0.8
   ) +
-
-  # Labels
+  scale_size_area() +
+  
   geom_label_repel(
-    data = location_coords,
+    data = labels,
     aes(
-      x = Longitude, y = Latitude,
-      label = paste0(Location, "\n", Event, "\n", Date)
+      x = x, y = y,
+      label = paste0(location, "\n", event, " (" , amount, ")", "\n", date)
     ),
     size = 2.5, box.padding = 0.5, point.padding = 0.3,
     segment.color = "grey50", force = 10, max.overlaps = Inf,
     fill = "white", color = "black"
   ) +
-
-  # Color and size scales
-  scale_fill_manual(values = event_colors, name = "Event Type") +
-  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
-  scale_color_manual(values = event_colors, name = "Event Type") +
-  scale_size_continuous(range = c(3, 10), name = "Magnitude") +
-
+  
   # Theme and labels
   theme_minimal() +
   labs(
@@ -161,7 +231,13 @@ ggplot() +
     y = "Latitude",
     caption = "Map Source: Singapore GeoJSON"
   ) +
-
+  
+  # Color and size scales
+  scale_fill_manual(values = event_colors, name = "Event Type") +
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
+  scale_color_manual(values = event_colors, name = "Event Type") +
+  scale_size_continuous(range = c(3, 10), name = "Months") +
+  
   # Adjust theme elements
   theme(
     plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
@@ -175,13 +251,13 @@ ggplot() +
     axis.text = element_blank(),
     axis.title = element_blank()
   ) +
-
+  
   # Guides
   guides(
     color = guide_legend(override.aes = list(size = 5)),
     size = guide_legend(override.aes = list(color = "gray30"))
   ) +
-
+  
   # Add north arrow and scale bar
   annotation_north_arrow(
     location = "bl", which_north = "true",
@@ -189,15 +265,16 @@ ggplot() +
     style = north_arrow_minimal
   ) +
   annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
-
+  
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
 
+
 ## Population Density by Planning Area
 ```{r}
 # Load the population data from the Excel file
-population_data_excel_path <- 'respopagesexfa2023e.xlsx'
+population_data_excel_path <- "respopagesexfa2023e.xlsx"
 population_data <- read_excel(population_data_excel_path, skip = 2)
 
 # Display the first few rows of the dataset
@@ -225,10 +302,6 @@ head(population_aggregated)
 ```
 
 ```{r}
-# Load the GeoJSON file
-geojson_path <- 'sg.geojson'
-singapore_map <- st_read(geojson_path)
-
 # Merge population data with geographical data
 singapore_map <- singapore_map %>%
   left_join(population_aggregated, by = c("planning_area" = "PA"))
@@ -239,51 +312,63 @@ ggplot() +
   # Use viridis palette for perceptual uniformity and accessibility
   scale_fill_viridis_c(option = "plasma", name = "Population Count", labels = comma) +
   theme_minimal() +
-  labs(title = "Population Density in Singapore (2023)",
-       subtitle = "Aggregated by Planning Area",
-       x = "Longitude",
-       y = "Latitude",
-       caption = "Source: Singapore Department of Statistics") +
-  theme(plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
-        plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
-        legend.position = "right",
-        legend.box = "vertical",
-        legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
-        plot.margin = unit(c(1, 1, 1, 1), "cm"),
-        text = element_text(size = 10),
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        axis.title = element_blank())
+  labs(
+    title = "Population Density in Singapore (2023)",
+    subtitle = "Aggregated by Planning Area",
+    x = "Longitude",
+    y = "Latitude",
+    caption = "Source: Singapore Department of Statistics"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
+    legend.position = "right",
+    legend.box = "vertical",
+    legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    text = element_text(size = 10),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  )
 ```
 
-## Merging Weather Extremes Plot and Population Density Plot
 
+## Merging Weather Extremes Plot and Population Density Plot
 ```{r}
+#| fig-width: 10
+#| fig-height: 10
+
 # Create the combined plot
 ggplot() +
   # Base map for population density
-  geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
+  geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80") +
+  
   # Events data
-  geom_point(
-    data = location_coords,
-    aes(x = Longitude, y = Latitude, color = Type, size = Magnitude),
+  geom_count(
+    data = combined_extremes,
+    aes(x = x, y = y, color = event),
     alpha = 0.8
   ) +
+  scale_size_area() +
+  
   # Labels for weather events
   geom_label_repel(
-    data = location_coords,
+    data = labels,
     aes(
-      x = Longitude, y = Latitude,
-      label = paste0(Location, "\n", Event, "\n", Date)
+      x = x, y = y,
+      label = paste0(location, "\n", event, "\n", date)
     ),
     size = 2.5, box.padding = 0.5, point.padding = 0.3,
     segment.color = "grey50", force = 10, max.overlaps = Inf,
     fill = "white", color = "black"
   ) +
+  
   # Color and size scales
-  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
   scale_color_manual(values = event_colors, name = "Event Type") +
-  scale_size_continuous(name = "Magnitude") +
+  scale_size_continuous(range = c(3, 10), name = "Months") +
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
+  
   # Theme and labels
   theme_minimal() +
   labs(
@@ -293,6 +378,7 @@ ggplot() +
     y = "Latitude",
     caption = "Source: Singapore Department of Statistics and Weather Data"
   ) +
+  
   # Adjust theme elements
   theme(
     plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
@@ -306,6 +392,7 @@ ggplot() +
     axis.text = element_blank(),
     axis.title = element_blank()
   ) +
+  
   # Guides for color and size
   guides(
     color = guide_legend(override.aes = list(size = 5)),
@@ -322,41 +409,46 @@ ggplot() +
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
 
-## Adding Icons above the labels for the different weather extremes
 
+## Adding Icons above the labels for the different weather extremes
 ```{r}
+#| fig-width: 10
+#| fig-height: 10
+
 # Add icons to the map above
 ggplot() +
   # Base map for population density
   geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
   # Events data
-  geom_point(
-    data = location_coords,
-    aes(x = Longitude, y = Latitude, color = Type),
-    shape = 21, size = 8, alpha = 0.8
+  geom_count(
+    data = combined_extremes,
+    aes(x = x, y = y, color = event), 
+    shape = 21 ,alpha = 0.8
   ) +
+  
   # Icons for weather events
   geom_image(
-    data = location_coords,
-    aes(x = Longitude, y = Latitude, image = icon),
-    size = 0.05,   # Adjust size as needed
-    by = "width"   # Ensures the icon sizes are consistent
+    data = labels,
+    aes(x = x, y = y, image = icon),
+    size = 0.05, # Adjust size as needed
+    by = "width" # Ensures the icon sizes are consistent
   ) +
   # Labels for weather events
   geom_label_repel(
-    data = location_coords,
+    data = labels,
     aes(
-      x = Longitude, y = Latitude,
-      label = paste0(Location, "\n", Event, "\n", Date)
+      x = x, y = y,
+      label = paste0(location, "\n", event, "\n", date)
     ),
     size = 2.5, box.padding = 0.5, point.padding = 0.3,
     segment.color = "grey50", force = 10, max.overlaps = Inf,
-    fill = "white", color = "black"
+    fill = "white", color = "black", hjust = 0.5
   ) +
   # Color and size scales
   scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
   scale_color_manual(values = event_colors, name = "Event Type") +
-  scale_size_continuous(name = "Magnitude") +
+  scale_size_continuous(range = c(10,20), name = "Months") +
+
   # Theme and labels
   theme_minimal() +
   labs(
@@ -366,6 +458,7 @@ ggplot() +
     y = "Latitude",
     caption = "Source: Singapore Department of Statistics and Weather Data"
   ) +
+  
   # Adjust theme elements
   theme(
     plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
@@ -379,18 +472,22 @@ ggplot() +
     axis.text = element_blank(),
     axis.title = element_blank()
   ) +
+  
   # Guides for color and size
   guides(
     color = guide_legend(override.aes = list(size = 5)),
     size = guide_legend(override.aes = list(color = "gray30"))
   ) +
+  
   # Add north arrow and scale bar
   annotation_north_arrow(
     location = "bl", which_north = "true",
     pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in"),
     style = north_arrow_minimal
   ) +
+  
   annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
+  
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
