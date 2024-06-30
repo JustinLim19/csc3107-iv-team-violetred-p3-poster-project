@@ -549,15 +549,249 @@ Adding another scale for size, which will replace the existing scale.</code></pr
 </div>
 </div>
 </section>
+<section id="map-of-waterbodies" class="level2">
+<h2 class="anchored" data-anchor-id="map-of-waterbodies">Map of waterbodies</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>waterbodies <span class="ot">&lt;-</span> <span class="fu">geojson_sf</span>(<span class="st">"waterbody.geojson"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the GeoJSON file</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">st_geometry_type</span>(waterbodies))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   [1] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+   [6] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [11] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [16] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [21] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [26] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [31] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [36] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [41] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [46] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [51] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [56] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [61] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [66] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [71] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [76] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [81] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [86] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [91] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+  [96] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [101] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [106] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [111] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [116] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [121] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [126] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [131] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [136] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [141] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [146] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [151] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [156] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [161] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [166] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [171] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [176] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [181] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [186] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [191] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [196] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [201] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [206] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [211] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [216] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [221] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [226] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [231] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [236] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [241] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [246] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [251] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [256] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [261] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [266] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [271] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [276] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [281] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [286] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [291] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [296] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [301] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [306] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [311] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [316] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [321] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [326] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [331] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [336] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [341] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [346] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [351] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [356] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [361] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [366] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [371] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [376] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [381] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [386] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [391] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [396] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [401] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [406] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [411] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [416] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [421] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [426] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [431] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [436] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [441] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [446] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [451] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [456] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [461] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [466] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [471] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [476] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [481] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [486] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [491] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [496] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [501] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [506] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [511] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [516] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [521] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [526] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [531] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [536] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [541] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [546] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [551] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [556] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [561] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [566] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [571] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [576] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [581] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [586] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [591] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [596] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [601] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [606] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [611] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [616] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [621] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [626] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [631] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [636] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [641] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [646] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [651] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [656] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [661] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [666] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [671] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [676] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [681] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [686] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [691] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [696] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [701] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [706] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [711] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [716] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [721] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [726] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [731] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [736] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [741] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [746] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [751] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [756] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [761] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [766] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [771] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [776] POLYGON      POLYGON      POLYGON      POLYGON      MULTIPOLYGON
+ [781] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [786] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [791] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [796] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [801] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [806] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [811] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [816] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [821] POLYGON      POLYGON      MULTIPOLYGON POLYGON      POLYGON     
+ [826] MULTIPOLYGON MULTIPOLYGON POLYGON      MULTIPOLYGON POLYGON     
+ [831] MULTIPOLYGON POLYGON      MULTIPOLYGON POLYGON      MULTIPOLYGON
+ [836] POLYGON      MULTIPOLYGON POLYGON      POLYGON      POLYGON     
+ [841] POLYGON      POLYGON      MULTIPOLYGON POLYGON      POLYGON     
+ [846] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [851] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [856] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [861] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [866] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [871] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [876] POLYGON      POLYGON      POLYGON      POLYGON      MULTIPOLYGON
+ [881] MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON POLYGON     
+ [886] POLYGON      POLYGON      POLYGON      POLYGON      MULTIPOLYGON
+ [891] MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON
+ [896] POLYGON      MULTIPOLYGON POLYGON      POLYGON      MULTIPOLYGON
+ [901] POLYGON      MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON
+ [906] POLYGON      MULTIPOLYGON POLYGON      MULTIPOLYGON POLYGON     
+ [911] POLYGON      POLYGON      MULTIPOLYGON MULTIPOLYGON POLYGON     
+ [916] MULTIPOLYGON POLYGON      POLYGON      POLYGON      POLYGON     
+ [921] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [926] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [931] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [936] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [941] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [946] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [951] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [956] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [961] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [966] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [971] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [976] MULTIPOLYGON POLYGON      POLYGON      POLYGON      POLYGON     
+ [981] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [986] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [991] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+ [996] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+[1001] POLYGON      POLYGON      POLYGON      POLYGON      POLYGON     
+[1006] POLYGON      POLYGON      POLYGON      POLYGON     
+18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">st_bbox</span>(waterbodies))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      xmin       ymin       xmax       ymax 
+103.605709   1.238664 104.051163   1.469667 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure CRS is set correctly</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(waterbodies) <span class="ot">&lt;-</span> <span class="dv">4326</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the waterbodies</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> waterbodies, <span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Map of Waterbodies"</span>) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="weather_prep_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="population-density-by-planning-area" class="level2">
 <h2 class="anchored" data-anchor-id="population-density-by-planning-area">Population Density by Planning Area</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the population data from the Excel file</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>population_data_excel_path <span class="ot">&lt;-</span> <span class="st">"respopagesexfa2023e.xlsx"</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(population_data_excel_path, <span class="at">skip =</span> <span class="dv">2</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the population data from the Excel file</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>population_data_excel_path <span class="ot">&lt;-</span> <span class="st">"respopagesexfa2023e.xlsx"</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(population_data_excel_path, <span class="at">skip =</span> <span class="dv">2</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows of the dataset</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   `Planning Area` Subzone `Age Group` `Floor Area` `2023` 
@@ -569,21 +803,21 @@ Adding another scale for size, which will replace the existing scale.</code></pr
 5 Total           Total   Total       &gt; 100 - 120  1125500
 6 Total           Total   Total       &gt; 120        1149000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">PA =</span> <span class="st">`</span><span class="at">Planning Area</span><span class="st">`</span>, <span class="at">Pop =</span> <span class="st">`</span><span class="at">2023</span><span class="st">`</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Pop column to numeric, coercing any non-numeric values to NA</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">as.numeric</span>(Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename columns</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">PA =</span> <span class="st">`</span><span class="at">Planning Area</span><span class="st">`</span>, <span class="at">Pop =</span> <span class="st">`</span><span class="at">2023</span><span class="st">`</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Pop column to numeric, coercing any non-numeric values to NA</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>population_data <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">as.numeric</span>(Pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There was 1 warning in `mutate()`.
 ℹ In argument: `Pop = as.numeric(Pop)`.
 Caused by warning:
 ! NAs introduced by coercion</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the cleaned and renamed data</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the cleaned and renamed data</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   PA    Subzone `Age Group` `Floor Area`     Pop
@@ -595,14 +829,14 @@ Caused by warning:
 5 Total Total   Total       &gt; 100 - 120  1125500
 6 Total Total   Total       &gt; 120        1149000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first row of each distinct Planning Area, which contains the total population</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>population_aggregated <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the aggregated population data</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_aggregated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first row of each distinct Planning Area, which contains the total population</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>population_aggregated <span class="ot">&lt;-</span> population_data <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the aggregated population data</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(population_aggregated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   PA                                     Subzone `Age Group` `Floor Area`    Pop
@@ -616,210 +850,226 @@ Caused by warning:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge population data with geographical data</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(population_aggregated, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"planning_area"</span> <span class="ot">=</span> <span class="st">"PA"</span>))</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the population density heatmap</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use viridis palette for perceptual uniformity and accessibility</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Density in Singapore (2023)"</span>,</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Aggregated by Planning Area"</span>,</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics"</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge population data with geographical data</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>singapore_map <span class="ot">&lt;-</span> singapore_map <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(population_aggregated, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"planning_area"</span> <span class="ot">=</span> <span class="st">"PA"</span>))</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the population density heatmap</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use viridis palette for perceptual uniformity and accessibility</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Density in Singapore (2023)"</span>,</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Aggregated by Planning Area"</span>,</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics"</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="weather_prep_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="weather_prep_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="merging-weather-extremes-plot-and-population-density-plot" class="level2">
-<h2 class="anchored" data-anchor-id="merging-weather-extremes-plot-and-population-density-plot">Merging Weather Extremes Plot and Population Density Plot</h2>
+<section id="merging-weather-extremes-plot-population-density-plot-waterbodies-plot" class="level2">
+<h2 class="anchored" data-anchor-id="merging-weather-extremes-plot-population-density-plot-waterbodies-plot">Merging Weather Extremes Plot, Population Density Plot &amp; Waterbodies Plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the combined plot</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Base map for population density</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Events data</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> combined_extremes,</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> event),</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>() <span class="sc">+</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"grey50"</span>, <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>,</span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span></span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>), <span class="at">name =</span> <span class="st">"Months"</span>) <span class="sc">+</span></span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Combining population density with significant weather events"</span>,</span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
-<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
-<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
-<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
-<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
-<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
-<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
-<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
-<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
-<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
-<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
-<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
-<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
-<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Scale for size is already present.
-Adding another scale for size, which will replace the existing scale.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the combined plot</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Base map for population density</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Waterbodies</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> waterbodies, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Events data</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> combined_extremes,</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> event),</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>() <span class="sc">+</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"grey50"</span>, <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>,</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>), <span class="at">name =</span> <span class="st">"Months"</span>) <span class="sc">+</span></span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
+<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
+<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Combining population density with significant weather events"</span>,</span>
+<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
+<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
+<span id="cb46-41"><a href="#cb46-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
+<span id="cb46-42"><a href="#cb46-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-43"><a href="#cb46-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-44"><a href="#cb46-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
+<span id="cb46-45"><a href="#cb46-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb46-46"><a href="#cb46-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb46-47"><a href="#cb46-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
+<span id="cb46-48"><a href="#cb46-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb46-49"><a href="#cb46-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb46-50"><a href="#cb46-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb46-51"><a href="#cb46-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
+<span id="cb46-52"><a href="#cb46-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb46-53"><a href="#cb46-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-54"><a href="#cb46-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb46-55"><a href="#cb46-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb46-56"><a href="#cb46-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-57"><a href="#cb46-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb46-58"><a href="#cb46-58" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
+<span id="cb46-59"><a href="#cb46-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb46-60"><a href="#cb46-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
+<span id="cb46-61"><a href="#cb46-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
+<span id="cb46-62"><a href="#cb46-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-63"><a href="#cb46-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
+<span id="cb46-64"><a href="#cb46-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
+<span id="cb46-65"><a href="#cb46-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
+<span id="cb46-66"><a href="#cb46-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
+<span id="cb46-67"><a href="#cb46-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
+<span id="cb46-68"><a href="#cb46-68" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-69"><a href="#cb46-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
+<span id="cb46-70"><a href="#cb46-70" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
+<span id="cb46-71"><a href="#cb46-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-72"><a href="#cb46-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-73"><a href="#cb46-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the figure</span></span>
+<span id="cb46-74"><a href="#cb46-74" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="weather_prep_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="weather_prep_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the figure</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"images/improved_visualization.png"</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> combined_plot,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">10</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">"in"</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span>,</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">"white"</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="adding-icons-above-the-labels-for-the-different-weather-extremes" class="level2">
 <h2 class="anchored" data-anchor-id="adding-icons-above-the-labels-for-the-different-weather-extremes">Adding Icons above the labels for the different weather extremes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add icons to the map above</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Base map for population density</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Events data</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> combined_extremes,</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> event), </span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span> ,<span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Icons for weather events</span></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">image =</span> icon),</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>, <span class="co"># Adjust size as needed</span></span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"width"</span> <span class="co"># Ensures the icon sizes are consistent</span></span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"grey50"</span>, <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>,</span>
-<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span></span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
-<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">name =</span> <span class="st">"Months"</span>) <span class="sc">+</span></span>
-<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
-<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
-<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Adding icons to the combined map"</span>,</span>
-<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
-<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
-<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
-<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
-<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
-<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
-<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
-<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
-<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
-<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
-<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
-<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
-<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
-<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
-<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
-<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
-<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
-<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
-<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
-<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add icons to the map above</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Base map for population density</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> singapore_map, <span class="fu">aes</span>(<span class="at">fill =</span> Pop), <span class="at">color =</span> <span class="st">"gray80"</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Waterbodies</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> waterbodies, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Events data</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> combined_extremes,</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> event), </span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span> ,<span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Icons for weather events</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">image =</span> icon),</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>, <span class="co"># Adjust size as needed</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"width"</span> <span class="co"># Ensures the icon sizes are consistent</span></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"grey50"</span>, <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>,</span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span></span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">name =</span> <span class="st">"Months"</span>) <span class="sc">+</span></span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Adding icons to the combined map"</span>,</span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
+<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
+<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
+<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
+<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
+<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
+<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
+<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="weather_prep_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="weather_prep_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>

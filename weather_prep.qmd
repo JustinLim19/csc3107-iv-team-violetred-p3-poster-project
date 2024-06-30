@@ -356,9 +356,10 @@ ggplot() +
 ```{r}
 #| fig-width: 10
 #| fig-height: 10
+#| warning: false
 
 # Create the combined plot
-ggplot() +
+combined_plot <- ggplot() +
   # Base map for population density
   geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80") +
   
@@ -428,6 +429,20 @@ ggplot() +
   annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
+
+# Display the figure
+print(combined_plot)
+
+# Save the figure
+ggsave(
+  filename = "images/improved_visualization.png",
+  plot = combined_plot,
+  width = 10,
+  height = 10,
+  units = "in",
+  dpi = 300,
+  bg = "white"
+)
 ```
 
 
