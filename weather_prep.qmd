@@ -272,7 +272,23 @@ ggplot() +
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
+## Map of waterbodies 
+```{r}
+waterbodies <- geojson_sf("waterbody.geojson")
 
+# Check the structure of the GeoJSON file
+print(st_geometry_type(waterbodies))
+print(st_bbox(waterbodies))
+
+# Ensure CRS is set correctly
+st_crs(waterbodies) <- 4326
+
+# Plot the waterbodies
+ggplot() +
+  geom_sf(data = waterbodies, fill = "blue") +
+  ggtitle("Map of Waterbodies") +
+  theme_minimal()
+```
 ## Population Density by Planning Area
 ```{r}
 # Load the population data from the Excel file
@@ -336,7 +352,7 @@ ggplot() +
 ```
 
 
-## Merging Weather Extremes Plot and Population Density Plot
+## Merging Weather Extremes Plot, Population Density Plot & Waterbodies Plot
 ```{r}
 #| fig-width: 10
 #| fig-height: 10
@@ -345,6 +361,9 @@ ggplot() +
 ggplot() +
   # Base map for population density
   geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80") +
+  
+  # Waterbodies
+  geom_sf(data = waterbodies, fill = "blue", alpha = 0.5) +
   
   # Events data
   geom_count(
@@ -421,6 +440,10 @@ ggplot() +
 ggplot() +
   # Base map for population density
   geom_sf(data = singapore_map, aes(fill = Pop), color = "gray80", size = 0.2) +
+  
+  # Waterbodies
+  geom_sf(data = waterbodies, fill = "blue", alpha = 0.5) +
+  
   # Events data
   geom_count(
     data = combined_extremes,
