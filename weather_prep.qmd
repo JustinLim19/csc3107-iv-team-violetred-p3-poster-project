@@ -27,6 +27,9 @@ library(geojsonsf)
 library(scales)
 library(viridis) # For color-blind friendly palette
 library(ggspatial) # For north arrow and scale bar
+library(leaflet) # For interactive maps
+library(stringr) # For string manipulation
+library(rvest) # For web scraping
 ```
 
 ## Loading the datasets
@@ -269,7 +272,6 @@ ggplot() +
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
 ```
-
 
 ## Population Density by Planning Area
 ```{r}
