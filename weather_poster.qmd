@@ -7,7 +7,7 @@ format:
     departments: "Ang Guo Zheng Frederick, Abdul Halim Bin Abdul Rahim, Mirza Anaqi Bin Muhammad Haizan, Mark Peng Jung Zen, Fong Kah Kian, Amanda Chan Hui En"
     institution-logo: "./images/sit-logo.png"
     footer-text: "Information Visualization 2024"
-    footer-emails: "team_violet_red@singaporetech.edu.sg"
+    footer-emails: "team_violetred@singaporetech.edu.sg"
 execute:
   echo: false
 knitr:
@@ -69,9 +69,21 @@ include_graphics("images/weather_extreme_label.png")
 
 ## Data
 
-*   The Meteorological Service Singapore and data.gov.sg provide detailed weather statistics and real-time weather readings across Singapore, which can be accessed and used to replicate the visualization we are interested in[^climate_historical_daily_2024].
+*   The Meteorological Service Singapore (data.gov.sg) provide detailed weather statistics and real-time weather readings across Singapore, which can be scraped and used in our visualization[^climate_historical_daily_2024].
+
+* Kaggle provides us with the Singapore City Geo-Coordinates to be used as the base of our choropleth map visualization[^singapore_city_geo_coordinates].
+
+* From SingStat.gov.sg we retrieved the population density of Singapore Residents by Planning Area statistics to be layered on top of the visualization[^geographic_distribution].
+
+* From Data.gov.sg, we extracted the water bodies in Singapore to be layered on top of the visualization as well[^waterbody_layer].
 
 [^climate_historical_daily_2024]: <http://www.weather.gov.sg/climate-historical-daily/>
+
+[^singapore_city_geo_coordinates]:<https://www.kaggle.com/datasets/shymammoth/singapore-city-geo-coordinates-more-reliable>
+
+[^geographic_distribution]:<https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data>
+
+[^waterbody_layer]:<https://beta.data.gov.sg/datasets?query=Waterbody&resultId=d_0b0792ae30cd6cce62e5ea55fc37860e>
 
 
 ## Software
