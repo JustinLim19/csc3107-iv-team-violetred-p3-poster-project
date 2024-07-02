@@ -626,14 +626,13 @@ ggplot() +
     size = guide_legend(override.aes = list(color = "gray30"))
   ) +
   
-  # Add north arrow and scale bar
+   # Add north arrow and scale bar
   annotation_north_arrow(
     location = "bl", which_north = "true",
-    pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in"),
-    style = north_arrow_minimal
+    pad_x = unit(0.4, "in"), pad_y = unit(0.2, "in"),
+    style = north_arrow_fancy_orienteering
   ) +
-  
-  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
+  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.1, "in"), pad_y = unit(0.1, "in")) +
   
   # Set coordinate limits
   coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
