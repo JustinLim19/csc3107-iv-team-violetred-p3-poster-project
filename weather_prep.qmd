@@ -144,11 +144,11 @@ combined_extremes
 ```{r}
 # Custom color palette
 event_colors <- c(
-  "Wettest" = "#5ab4ac",
-  "Driest" = "#d8b365",
-  "Temperature (Cool)" = "#4575b4",
+  "Wettest" = "#7a47cc",
+  "Driest" = "#e3d345",
+  "Temperature (Cool)" = "#65d8e7",
   "Temperature (Hot)" = "#d73027",
-  "Wind Speed" = "#91bfdb"
+  "Wind Speed" = "#71cfab"
 )
 
 wettest_date <-
@@ -498,6 +498,103 @@ ggplot() +
   scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
   scale_color_manual(values = event_colors, name = "Event Type") +
   scale_size_continuous(range = c(10,20), name = "No. of Months") +
+
+  # Theme and labels
+  theme_minimal() +
+  labs(
+    title = "Weather Extremes in Singapore (2023)",
+    subtitle = "Adding icons to the combined map",
+    x = "Longitude",
+    y = "Latitude",
+    caption = "Source: Singapore Department of Statistics and Weather Data"
+  ) +
+  
+  # Adjust theme elements
+  theme(
+    plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
+    legend.position = "right",
+    legend.box = "vertical",
+    legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+    plot.margin = unit(c(1, 1, 1, 1), "cm"),
+    text = element_text(size = 10),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  ) +
+  
+  # Guides for color and size
+  guides(
+    color = guide_legend(override.aes = list(size = 5)),
+    size = guide_legend(override.aes = list(color = "gray30"))
+  ) +
+  
+  # Add north arrow and scale bar
+  annotation_north_arrow(
+    location = "bl", which_north = "true",
+    pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in"),
+    style = north_arrow_minimal
+  ) +
+  
+  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.0, "in"), pad_y = unit(0.0, "in")) +
+  
+  # Set coordinate limits
+  coord_sf(xlim = c(103.6, 104.1), ylim = c(1.15, 1.5), expand = FALSE)
+```
+
+
+## Adding Icons above the labels for the different weather extremes
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+
+hdb_buildings <- geojson_sf("HDBExistingBuilding.geojson")
+
+
+# Add icons to the map above 
+ggplot() +
+  # HDB building data
+  geom_sf(data = singapore_map, fill = "#c0c0c0c0", color = "black", size = 0.5) +
+  
+  geom_sf(data = hdb_buildings, fill = NA, color = "#ff4040b0", size = 0.2) +
+  
+  # Waterbodies
+  geom_sf(data = waterbodies, fill = "blue", alpha = 0.5) +
+  
+  # Events data
+  geom_count(
+    data = combined_extremes,
+    aes(x = x, y = y, color = event),
+    stroke = 1, alpha = 0.4
+  ) +
+  
+  # Labels for weather events
+  geom_label_repel(
+    data = labels,
+    aes(
+      x = x, y = y,
+      label = paste0(location, "\n", event, "\n", round(amount, 1), unit, "\n", date)
+    ),
+    size = 2.5, box.padding = 0.5, point.padding = 0.3,
+    segment.color = "black", segment.size = 1, segment.alpha = 0.6,
+    force = 10, max.overlaps = Inf, fill = after_scale(alpha("white", 0.5)),
+    color = "black", hjust = 0.5,
+    nudge_x = labels$nudge_x_repel,
+    nudge_y = labels$nudge_y_repel
+  ) +
+  
+    # Icons for weather events
+  geom_image(
+    data = labels,
+    aes(x = x + nudge_x_icon, y = y + nudge_y_icon, image = icon),
+    size = 0.05, # Adjust size as needed
+    by = "width" # Ensures the icon sizes are consistent
+  ) +
+  
+  # Color and size scales
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
+  scale_color_manual(values = event_colors, name = "Event Type") +
+  scale_size_continuous(range = c(10,20), name = "Freq of Weather Extremes in Months") +
 
   # Theme and labels
   theme_minimal() +
