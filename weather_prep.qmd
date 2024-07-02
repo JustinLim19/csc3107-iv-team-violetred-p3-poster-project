@@ -184,13 +184,18 @@ labels <- bind_rows(
   strongest_wind_gust
 ) |>
   mutate(
+    unit = c("mm", "mm", "°C", "°C", "km/h"),
     icon = c(
       "icons/rainfall_icon.png",
-      "icons/dry_icon.jpg",
+      "icons/dry_icon.png",
       "icons/sun_icon.png",
       "icons/cool_temperature_icon.png",
       "icons/wind_icon.png"
-    )
+    ), # Order: Wettest, Driest, Hottest, Coolest, Windiest
+    nudge_x_icon = c(0.093, 0.052, 0.097, 0.041, -0.087),
+    nudge_y_icon = c(0.099, -0.115, -0.078, 0.114, 0.053),
+    nudge_x_repel = c(0.07, 0.033, 0.061, 0.008, -0.135),
+    nudge_y_repel = c(0.078, -0.096, -0.061, 0.12, 0.03)
   )
 
 labels
@@ -463,31 +468,36 @@ ggplot() +
   geom_count(
     data = combined_extremes,
     aes(x = x, y = y, color = event), 
-    shape = 21 ,alpha = 0.8
+    shape = 21, stroke = 1, alpha = 0.7
   ) +
   
-  # Icons for weather events
-  geom_image(
-    data = labels,
-    aes(x = x, y = y, image = icon),
-    size = 0.05, # Adjust size as needed
-    by = "width" # Ensures the icon sizes are consistent
-  ) +
   # Labels for weather events
   geom_label_repel(
     data = labels,
     aes(
       x = x, y = y,
-      label = paste0(location, "\n", event, "\n", date)
+      label = paste0(location, "\n", event, "\n", round(amount, 1), unit, "\n", date)
     ),
     size = 2.5, box.padding = 0.5, point.padding = 0.3,
-    segment.color = "grey50", force = 10, max.overlaps = Inf,
-    fill = "white", color = "black", hjust = 0.5
+    segment.color = "black", segment.size = 1, segment.alpha = 0.6,
+    force = 10, max.overlaps = Inf, fill = after_scale(alpha("white", 0.5)),
+    color = "black", hjust = 0.5,
+    nudge_x = labels$nudge_x_repel,
+    nudge_y = labels$nudge_y_repel
   ) +
+  
+    # Icons for weather events
+  geom_image(
+    data = labels,
+    aes(x = x + nudge_x_icon, y = y + nudge_y_icon, image = icon),
+    size = 0.05, # Adjust size as needed
+    by = "width" # Ensures the icon sizes are consistent
+  ) +
+  
   # Color and size scales
   scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
   scale_color_manual(values = event_colors, name = "Event Type") +
-  scale_size_continuous(range = c(10,20), name = "Months") +
+  scale_size_continuous(range = c(10,20), name = "No. of Months") +
 
   # Theme and labels
   theme_minimal() +

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -435,18 +435,23 @@ Caused by warning:
 <span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>  strongest_wind_gust</span>
 <span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">icon =</span> <span class="fu">c</span>(</span>
-<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/rainfall_icon.png"</span>,</span>
-<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/dry_icon.jpg"</span>,</span>
-<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/sun_icon.png"</span>,</span>
-<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/cool_temperature_icon.png"</span>,</span>
-<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/wind_icon.png"</span></span>
-<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>labels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">unit =</span> <span class="fu">c</span>(<span class="st">"mm"</span>, <span class="st">"mm"</span>, <span class="st">"°C"</span>, <span class="st">"°C"</span>, <span class="st">"km/h"</span>),</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">icon =</span> <span class="fu">c</span>(</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/rainfall_icon.png"</span>,</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/dry_icon.png"</span>,</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/sun_icon.png"</span>,</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/cool_temperature_icon.png"</span>,</span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>      <span class="st">"icons/wind_icon.png"</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>    ), <span class="co"># Order: Wettest, Driest, Hottest, Coolest, Windiest</span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_x_icon =</span> <span class="fu">c</span>(<span class="fl">0.093</span>, <span class="fl">0.052</span>, <span class="fl">0.097</span>, <span class="fl">0.041</span>, <span class="sc">-</span><span class="fl">0.087</span>),</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_y_icon =</span> <span class="fu">c</span>(<span class="fl">0.099</span>, <span class="sc">-</span><span class="fl">0.115</span>, <span class="sc">-</span><span class="fl">0.078</span>, <span class="fl">0.114</span>, <span class="fl">0.053</span>),</span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_x_repel =</span> <span class="fu">c</span>(<span class="fl">0.07</span>, <span class="fl">0.033</span>, <span class="fl">0.061</span>, <span class="fl">0.008</span>, <span class="sc">-</span><span class="fl">0.135</span>),</span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_y_repel =</span> <span class="fu">c</span>(<span class="fl">0.078</span>, <span class="sc">-</span><span class="fl">0.096</span>, <span class="sc">-</span><span class="fl">0.061</span>, <span class="fl">0.12</span>, <span class="fl">0.03</span>)</span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>labels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 10
+<pre><code># A tibble: 5 × 15
   location   date        x     y total_rainfall event    amount mean_temperature
   &lt;chr&gt;      &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;
 1 Ang Mo Kio 2023-12  104.  1.38           1772 Wettest  1772               NA  
@@ -454,7 +459,9 @@ Caused by warning:
 3 Tai Seng   2023-05  104.  1.34             NA Tempera…   29.7             29.7
 4 Tengah     2023-01  104.  1.38             NA Tempera…   26.1             26.1
 5 Tengah     2023-01  104.  1.38             NA Wind Sp…  108.              NA  
-# ℹ 2 more variables: wind_speed &lt;dbl&gt;, icon &lt;chr&gt;</code></pre>
+# ℹ 7 more variables: wind_speed &lt;dbl&gt;, unit &lt;chr&gt;, icon &lt;chr&gt;,
+#   nudge_x_icon &lt;dbl&gt;, nudge_y_icon &lt;dbl&gt;, nudge_x_repel &lt;dbl&gt;,
+#   nudge_y_repel &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -999,73 +1006,78 @@ Caused by warning:
 <span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
 <span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> combined_extremes,</span>
 <span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> event), </span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span> ,<span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">stroke =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span></span>
 <span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Icons for weather events</span></span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
 <span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">image =</span> icon),</span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>, <span class="co"># Adjust size as needed</span></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"width"</span> <span class="co"># Ensures the icon sizes are consistent</span></span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels for weather events</span></span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"grey50"</span>, <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>,</span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span></span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
-<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
-<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">name =</span> <span class="st">"Months"</span>) <span class="sc">+</span></span>
-<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
-<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
-<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Adding icons to the combined map"</span>,</span>
-<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
-<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
-<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
-<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
-<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
-<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
-<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
-<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
-<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
-<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
-<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
-<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
-<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
-<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
-<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
-<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
-<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
-<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
-<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
-<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, <span class="at">y =</span> y,</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">paste0</span>(location, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, event, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">round</span>(amount, <span class="dv">1</span>), unit, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, date)</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">point.padding =</span> <span class="fl">0.3</span>,</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">segment.color =</span> <span class="st">"black"</span>, <span class="at">segment.size =</span> <span class="dv">1</span>, <span class="at">segment.alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">force =</span> <span class="dv">10</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>, <span class="at">fill =</span> <span class="fu">after_scale</span>(<span class="fu">alpha</span>(<span class="st">"white"</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>,</span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_x =</span> labels<span class="sc">$</span>nudge_x_repel,</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_y =</span> labels<span class="sc">$</span>nudge_y_repel</span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Icons for weather events</span></span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(</span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> labels,</span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x <span class="sc">+</span> nudge_x_icon, <span class="at">y =</span> y <span class="sc">+</span> nudge_y_icon, <span class="at">image =</span> icon),</span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.05</span>, <span class="co"># Adjust size as needed</span></span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"width"</span> <span class="co"># Ensures the icon sizes are consistent</span></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Color and size scales</span></span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">name =</span> <span class="st">"Population Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">500000</span>, <span class="at">by =</span> <span class="dv">50000</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> event_colors, <span class="at">name =</span> <span class="st">"Event Type"</span>) <span class="sc">+</span></span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>), <span class="at">name =</span> <span class="st">"No. of Months"</span>) <span class="sc">+</span></span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Theme and labels</span></span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Weather Extremes in Singapore (2023)"</span>,</span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Adding icons to the combined map"</span>,</span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitude"</span>,</span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Latitude"</span>,</span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Singapore Department of Statistics and Weather Data"</span></span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme elements</span></span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"gray30"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">20</span>)),</span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">0</span>),</span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>),</span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Guides for color and size</span></span>
+<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(</span>
+<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>)),</span>
+<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"gray30"</span>))</span>
+<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add north arrow and scale bar</span></span>
+<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
+<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>,</span>
+<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>),</span>
+<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> north_arrow_minimal</span>
+<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-80"><a href="#cb48-80" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-81"><a href="#cb48-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>, <span class="at">width_hint =</span> <span class="fl">0.3</span>, <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>), <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.0</span>, <span class="st">"in"</span>)) <span class="sc">+</span></span>
+<span id="cb48-82"><a href="#cb48-82" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-83"><a href="#cb48-83" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set coordinate limits</span></span>
+<span id="cb48-84"><a href="#cb48-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">103.6</span>, <span class="fl">104.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">1.5</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
