@@ -68,9 +68,15 @@ head(combined_weather_data)
 
 ## -----------------------------------------------------------------------------
 weather_total_rainfall <- combined_weather_data |>
-  select(location = `Location`, date = `Date`, `Daily Rainfall Total (mm)`, x, y) |>
+  select(
+    location = `Location`, date = `Date`, `Daily Rainfall Total (mm)`, x, y
+  ) |>
   mutate(date = format(date, "%Y-%m")) |>
-  summarise(total_rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE), .by = c(location, date, x, y))
+  summarise(
+    total_rainfall =
+      sum(`Daily Rainfall Total (mm)`, na.rm = TRUE),
+    .by = c(location, date, x, y)
+  )
 
 wettest <- weather_total_rainfall |>
   slice_max(total_rainfall, n = 10, with_ties = FALSE)
@@ -84,9 +90,13 @@ driest
 
 ## -----------------------------------------------------------------------------
 weather_temperature <- combined_weather_data |>
-  select(location = `Location`, date = `Date`, temp = `Mean Temperature (°C)`, x, y) |>
+  select(
+    location = `Location`, date = `Date`, temp = `Mean Temperature (°C)`, x, y
+  ) |>
   mutate(date = format(date, "%Y-%m"), temp = as.numeric(temp)) |>
-  summarise(mean_temperature = mean(temp, na.rm = TRUE), .by = c(location, date, x, y))
+  summarise(
+    mean_temperature = mean(temp, na.rm = TRUE), .by = c(location, date, x, y)
+  )
 
 hottest <- weather_temperature |>
   slice_max(mean_temperature, n = 10, with_ties = FALSE)
@@ -99,11 +109,14 @@ coolest
 
 
 ## -----------------------------------------------------------------------------
-weather_wind_speed <- combined_weather_data |> 
-  select(location = `Location`, date = `Date`, wind_speed = `Max Wind Speed (km/h)`, x, y) |>
+weather_wind_speed <- combined_weather_data |>
+  select(
+    location = `Location`, date = `Date`, wind_speed = `Max Wind Speed (km/h)`,
+    x, y
+  ) |>
   mutate(date = format(date, "%Y-%m"), wind_speed = as.numeric(wind_speed))
 
-weather_wind_speed <- weather_wind_speed |> 
+weather_wind_speed <- weather_wind_speed |>
   slice_max(wind_speed, n = 10, with_ties = FALSE)
 
 weather_wind_speed
@@ -157,10 +170,10 @@ strongest_wind_gust <-
   mutate(event = "Highest Wind Speed", amount = wind_speed)
 
 labels <- bind_rows(
-  wettest_date, 
-  driest_date, 
-  hottest_date, 
-  coolest_date, 
+  wettest_date,
+  driest_date,
+  hottest_date,
+  coolest_date,
   strongest_wind_gust
 ) |>
   mutate(

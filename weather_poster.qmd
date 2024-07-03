@@ -8,7 +8,6 @@ format:
     institution-logo: "./images/sit-logo.png"
     footer-text: "Information Visualization 2024"
     footer-emails: "team_violetred@singaporetech.edu.sg"
-    fontsize: 16pt
 execute:
   echo: false
 knitr:
