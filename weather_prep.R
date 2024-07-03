@@ -21,8 +21,8 @@ library(rvest) # For web scraping
 
 
 ## -----------------------------------------------------------------------------
-weather_data <- read_excel("full_year_weather_data.xlsx")
-sg_coords <- read_csv("singapore_city_coordinates_improved.csv")
+weather_data <- read_excel("data/full_year_weather_data.xlsx")
+sg_coords <- read_csv("data/singapore_city_coordinates_improved.csv")
 
 
 ## -----------------------------------------------------------------------------

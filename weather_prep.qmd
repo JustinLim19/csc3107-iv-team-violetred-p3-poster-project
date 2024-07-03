@@ -49,8 +49,8 @@ library(rvest) # For web scraping
 ## Loading the datasets
 This code block loads the weather data and Singapore city coordinates into R. The weather data is read from an Excel file and the coordinates from a CSV file. This data will be used for subsequent analysis.
 ```{r}
-weather_data <- read_excel("full_year_weather_data.xlsx")
-sg_coords <- read_csv("singapore_city_coordinates_improved.csv")
+weather_data <- read_excel("data/full_year_weather_data.xlsx")
+sg_coords <- read_csv("data/singapore_city_coordinates_improved.csv")
 ```
 
 ## Cleaning the datasets

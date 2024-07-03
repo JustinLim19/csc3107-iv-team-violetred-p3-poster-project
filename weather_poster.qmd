@@ -112,11 +112,11 @@ We used the Quarto publication framework and the R programming language, along w
 #| out-width: 100%
 
 # Load necessary geojson
-singapore_map <- geojson_sf("sg.geojson")
+singapore_map <- geojson_sf("data/sg.geojson")
 
-waterbodies <- geojson_sf("waterbody.geojson")
+waterbodies <- geojson_sf("data/waterbody.geojson")
 
-hdb_buildings <- geojson_sf("HDBExistingBuilding.geojson")
+hdb_buildings <- geojson_sf("data/HDBExistingBuilding.geojson")
 
 labels$date <- as.Date(paste0(labels$date, "-01"), format = "%Y-%m-%d")
 
