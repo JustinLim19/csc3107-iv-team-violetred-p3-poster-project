@@ -4,10 +4,10 @@ format:
   poster-typst: 
     size: "30x27"
     poster-authors: "Team Violetred: Ang Guo Zheng Frederick, Abdul Halim Bin Abdul Rahim, Mirza Anaqi Bin Muhammad Haizan, Mark Peng Jung Zen, Fong Kah Kian, Amanda Chan Hui En"
-    departments: "Computer Science"
+    departments: "Computing Science"
     institution-logo: "./images/sit-logo.png"
     footer-text: "Information Visualization 2024"
-    footer-emails: "team_violetred@singaporetech.edu.sg"
+    footer-emails: "2203322@sit.singaporetech.edu.sg, 2201627@sit.singaporetech.edu.sg, 2200981@sit.singaporetech.edu.sg, 2200849@sit.singaporetech.edu.sg, 2200727@sit.singaporetech.edu.sg, 2203417@sit.singaporetech.edu.sg"
 execute:
   echo: false
 knitr:
@@ -52,7 +52,7 @@ include_graphics("images/weather_extremes_2023.png")
 ```{r}
 #| label: fig-weather_label
 #| fig-cap: "Zoomed-in screenshot of the weather condition label."
-#| out-width: 80%
+#| out-width: 100%
 
 include_graphics("images/weather_extreme_label.png")
 ```
@@ -107,8 +107,8 @@ We used the Quarto publication framework and the R programming language, along w
 ```{r}
 #| label: fig-improved_visualization
 #| fig-cap: "Improved visualization of Weather Extremes in Singapore 2023"
-#| fig-width: 10
-#| fig-height: 10
+#| fig-width: 12
+#| fig-height: 8
 #| out-width: 100%
 
 # Load necessary geojson

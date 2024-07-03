@@ -49,7 +49,7 @@
   univ_logo_scale: "50",
 
   // University logo's column size (in in).
-  univ_logo_column_size: "10",
+  univ_logo_column_size: "8",
 
   // Title and authors' column size (in in).
   title_column_size: "20",
@@ -61,7 +61,7 @@
   authors_font_size: "36",
 
   // Footer's URL and email font size (in pt).
-  footer_url_font_size: "30",
+  footer_url_font_size: "20",
 
   // Footer's text font size (in pt).
   footer_text_font_size: "40",
