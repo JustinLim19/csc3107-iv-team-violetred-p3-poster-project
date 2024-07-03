@@ -3,8 +3,8 @@ title: Visualizing Weather Extremes in Singapore 2023
 format:
   poster-typst: 
     size: "30x27"
-    poster-authors: "Team Violetred"
-    departments: "Ang Guo Zheng Frederick, Abdul Halim Bin Abdul Rahim, Mirza Anaqi Bin Muhammad Haizan, Mark Peng Jung Zen, Fong Kah Kian, Amanda Chan Hui En"
+    poster-authors: "Team Violetred: Ang Guo Zheng Frederick, Abdul Halim Bin Abdul Rahim, Mirza Anaqi Bin Muhammad Haizan, Mark Peng Jung Zen, Fong Kah Kian, Amanda Chan Hui En"
+    departments: "Computer Science"
     institution-logo: "./images/sit-logo.png"
     footer-text: "Information Visualization 2024"
     footer-emails: "team_violetred@singaporetech.edu.sg"
