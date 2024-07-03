@@ -8,7 +8,21 @@ format: html
 ## Introduction
 This report analyzes the weather extremes in Singapore for the year 2023, highlighting significant weather conditions across different regions. 
 
-The code below requires the following packages:
+## Required Libraries
+The following code block loads several R packages that are necessary for data manipulation, visualization, and geographical data handling. Each package serves a specific purpose:
+
+- `tidyverse`: A collection of packages for data manipulation and visualization.
+- `readxl`: For reading Excel files.
+- `ggplot2` and `ggrepel`: For creating advanced plots.
+- `ggimage`: To add images to ggplot.
+- `sf`: For handling spatial data.
+- `tibble` and `dplyr`: For data manipulation.
+- `geojsonsf`: For converting GeoJSON to simple features.
+- `scales` and `viridis`: For custom scales and color palettes.
+- `ggspatial`: For adding spatial elements like north arrows to plots.
+- `leaflet`: For creating interactive maps.
+- `stringr`: For string manipulation.
+- `rvest`: For web scraping.
 
 ```{r}
 #| label: setup
@@ -33,12 +47,18 @@ library(rvest) # For web scraping
 ```
 
 ## Loading the datasets
+This code block loads the weather data and Singapore city coordinates into R. The weather data is read from an Excel file and the coordinates from a CSV file. This data will be used for subsequent analysis.
 ```{r}
 weather_data <- read_excel("full_year_weather_data.xlsx")
 sg_coords <- read_csv("singapore_city_coordinates_improved.csv")
 ```
 
 ## Cleaning the datasets
+This section performs several cleaning steps on the weather data:
+
+- Date Conversion: Adds the year 2023 to the date entries and converts them to a `Date` format.
+- Rainfall Conversion: Converts the 'Daily Rainfall Total' column to numeric, forcing any non-numeric values to `NA`.
+- Removing Missing Values: Filters out rows with `NA` values in the 'Daily Rainfall Total' column to ensure clean data for analysis.
 ```{r}
 # Add the year to the date entries and convert to datetime format
 weather_data <- weather_data %>%
@@ -54,6 +74,11 @@ weather_data <- weather_data %>%
 ```
 
 ## Combining the datasets
+This section merges the cleaned weather data with city coordinates. It performs the following steps:
+
+- Selecting Relevant Columns: Extracts the relevant columns from the city coordinates dataset.
+- Joining Data: Joins the weather data with city coordinates based on city and place names.
+- Combining Results: Combines the joined datasets, ensuring all records with valid coordinates are included.
 ```{r}
 sg_coords <- sg_coords |>
   select(place = `Place`, city = `City`, y = `latitude`, x = `longitude`)
@@ -76,12 +101,20 @@ combined_weather_data <- bind_rows(
 combined_weather_data
 ```
 
+## Displaying the cleaned data
+This block displays the first few rows of the cleaned and combined weather data, allowing for a quick inspection to ensure the data is correctly processed.
 ```{r}
 # View the cleaned data
 head(combined_weather_data)
 ```
 
 ## Total Rainfall Analysis
+In this section, we analyze total rainfall by:
+
+- Selecting Columns: Selecting relevant columns for analysis.
+- Formatting Dates: Formatting the date column to a monthly format.
+- Summarizing Data: Summarizing total rainfall by location and date.
+- Identifying Extremes: Finding the top 10 wettest and driest periods.
 ```{r}
 weather_total_rainfall <- combined_weather_data |>
   select(
@@ -105,6 +138,12 @@ driest
 ```
 
 ## Temperature Analysis
+This section analyzes the mean temperature by:
+
+- Selecting Columns: Selecting relevant columns for analysis.
+- Formatting and Converting Data: Formatting the date column and converting temperature values to numeric.
+- Summarizing Data: Summarizing mean temperature by location and date.
+- Identifying Extremes: Finding the top 10 hottest and coolest periods.
 ```{r}
 weather_temperature <- combined_weather_data |>
   select(
@@ -126,6 +165,11 @@ coolest
 ```
 
 ## Wind Gust Analysis
+This section analyzes the maximum wind speed by:
+
+- Selecting Columns: Selecting relevant columns for analysis.
+- Formatting and Converting Data: Formatting the date column and converting wind speed values to numeric.
+- Identifying Extremes: Finding the top 10 highest wind speeds.
 ```{r}
 weather_wind_speed <- combined_weather_data |>
   select(
@@ -140,6 +184,8 @@ weather_wind_speed <- weather_wind_speed |>
 weather_wind_speed
 ```
 
+## Combining Extreme Weather Events
+In this section, we combine the extreme weather events (rainfall, temperature, and wind speed) into a single dataset. This dataset will be used to summarize and visualize the most extreme weather events.
 ```{r}
 combined_extremes <- bind_rows(
   wettest %>% mutate(event = "Wettest", amount = total_rainfall),
@@ -153,7 +199,11 @@ combined_extremes
 ```
 
 ## Preparing for Map Plot
+This section prepares the data for mapping by:
 
+- Defining Color Palette: Creating a custom color palette for different weather events.
+- Identifying Most Extreme Events: Selecting the most extreme weather events for each category.
+- Preparing Labels: Preparing labels with additional details (e.g., icons, units) for use in the map plot.
 ```{r}
 # Custom color palette
 event_colors <- c(
