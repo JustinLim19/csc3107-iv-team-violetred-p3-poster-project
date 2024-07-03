@@ -2,12 +2,13 @@
 title: Visualizing Weather Extremes in Singapore 2023
 format:
   poster-typst: 
-    size: "30x25"
+    size: "30x27"
     poster-authors: "Team Violetred"
     departments: "Ang Guo Zheng Frederick, Abdul Halim Bin Abdul Rahim, Mirza Anaqi Bin Muhammad Haizan, Mark Peng Jung Zen, Fong Kah Kian, Amanda Chan Hui En"
     institution-logo: "./images/sit-logo.png"
     footer-text: "Information Visualization 2024"
     footer-emails: "team_violetred@singaporetech.edu.sg"
+    fontsize: 16pt
 execute:
   echo: false
 knitr:
@@ -16,19 +17,19 @@ knitr:
 ---
 
 ```{r}
-#| label: setup
+#| label: poster-setup
 #| include: false
 
 library(knitr)
-# purl("measles_prep.qmd")
-# source("measles_prep.R")
+purl("weather_prep.qmd")
+source("weather_prep.R")
 ```
 
 # Introduction
 
 In 2024, Singapore is expected to experience even warmer weather than in 2023, which was the fourth warmest year on record for the country. The forecasted heat is due to the lingering effects of the El Niño climate phenomenon that impacted Singapore in the second half of 2023. Additionally, the positive Indian Ocean Dipole (IOD) conditions contributed to the elevated temperatures. Singapore's location between the Pacific and Indian oceans makes it more susceptible to climatic changes in both regions[^sg_el_nino_2024].
 
-[^sg_el_nino_2024]:<Han, G. Y. (2024, March 25). S’pore may be hotter in 2024 than 2023 due to lingering effects of El Nino: MSS report. Retrieved from The Straits Times: https://www.straitstimes.com/singapore/environment/s-pore-may-be-hotter-in-2024-than-2023-due-to-lingering-effects-of-el-nino-mss-report?close=true>
+[^sg_el_nino_2024]:Han, G. Y. (2024, March 25). S’pore may be hotter in 2024 than 2023 due to lingering effects of El Nino: MSS report. Retrieved from The Straits Times: https://www.straitstimes.com/singapore/environment/s-pore-may-be-hotter-in-2024-than-2023-due-to-lingering-effects-of-el-nino-mss-report?close=true
 
 Making use of Singapore’s weather data from 2023, the effects are illustrated with an annotated map where it showcases the map of Singapore pointing to areas which experience the different kinds of “Weather Extremes”(@fig-weather-on-poster). The map includes arrows that point to regions stating the significant weather condition, such as “Coolest Day” or the “Driest Month”, the date it occurred and its respective statistical value.
 
@@ -73,17 +74,15 @@ include_graphics("images/weather_extreme_label.png")
 
 * Kaggle provides us with the Singapore City Geo-Coordinates to be used as the base of our choropleth map visualization[^singapore_city_geo_coordinates].
 
-* From SingStat.gov.sg we retrieved the population density of Singapore Residents by Planning Area statistics to be layered on top of the visualization[^geographic_distribution].
-
-* From Data.gov.sg, we extracted the water bodies in Singapore to be layered on top of the visualization as well[^waterbody_layer].
+* From Data.gov.sg, we extracted the location of the water bodies in Singapore[^waterbody_layer] as well as the HDB locations[^hdb_layer] to be layered on top of the visualization.
 
 [^climate_historical_daily_2024]: <http://www.weather.gov.sg/climate-historical-daily/>
 
 [^singapore_city_geo_coordinates]:<https://www.kaggle.com/datasets/shymammoth/singapore-city-geo-coordinates-more-reliable>
 
-[^geographic_distribution]:<https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data>
-
 [^waterbody_layer]:<https://beta.data.gov.sg/datasets?query=Waterbody&resultId=d_0b0792ae30cd6cce62e5ea55fc37860e>
+
+[^hdb_layer]:<https://beta.data.gov.sg/datasets?query=HDB&resultId=d_16b157c52ed637edd6ba1232e026258d>
 
 
 ## Software
@@ -109,9 +108,103 @@ We used the Quarto publication framework and the R programming language, along w
 ```{r}
 #| label: fig-improved_visualization
 #| fig-cap: "Improved visualization of Weather Extremes in Singapore 2023"
+#| fig-width: 10
+#| fig-height: 10
 #| out-width: 100%
 
-include_graphics("images/improved_visualization.png")
+singapore_map <- geojson_sf("sg.geojson")
+
+waterbodies <- geojson_sf("waterbody.geojson")
+
+hdb_buildings <- geojson_sf("HDBExistingBuilding.geojson")
+
+labels$date <- as.Date(paste0(labels$date, "-01"), format = "%Y-%m-%d")
+
+# Add icons to the map above 
+ggplot() +
+  # HDB building data
+  geom_sf(data = singapore_map, fill = "#c0d0efa0", color = "black", size = 0.5) +
+  
+  geom_sf(data = hdb_buildings, fill = NA, color = "#605050b0", size = 0.2) +
+  
+  # Waterbodies
+  geom_sf(data = waterbodies, fill = "blue", alpha = 0.5) +
+  
+  # Events data
+  geom_count(
+    data = combined_extremes,
+    aes(x = x, y = y, color = event),
+    stroke = 1, alpha = 0.4
+  ) +
+  
+  # Labels for weather events
+  geom_label_repel(
+    data = labels,
+    aes(
+      x = x, y = y,
+      label = paste0(location, "\n", round(amount, 1), unit, "\n", event, "\n", format(date, "%b %Y"))
+    ),
+    size = 2.5, box.padding = 0.5, point.padding = 0.3,
+    segment.color = "black", segment.size = 1, segment.alpha = 0.6,
+    force = 10, max.overlaps = Inf, fill = after_scale(alpha("white", 0.5)),
+    color = "black", hjust = 0.5,
+    nudge_x = labels$nudge_x_repel,
+    nudge_y = labels$nudge_y_repel
+  ) +
+  
+    # Icons for weather events
+  geom_image(
+    data = labels,
+    aes(x = x + nudge_x_icon, y = y + nudge_y_icon, image = icon),
+    size = 0.05, # Adjust size as needed
+    by = "width" # Ensures the icon sizes are consistent
+  ) +
+  
+  # Color and size scales
+  scale_fill_fermenter(palette = "Blues", name = "Population Count", breaks = seq(0, 500000, by = 50000), labels = scales::comma, direction = 1) +
+  scale_color_manual(values = event_colors, name = "Event Type") +
+  scale_size_continuous(range = c(10,20), name = "Freq of Weather Extremes in Months") +
+
+  # Theme and labels
+  theme_minimal() +
+  labs(
+    title = "Weather Extremes in Singapore (2023)",
+    subtitle = "Overlayed with existing HDBs",
+    x = "Longitude",
+    y = "Latitude",
+    caption = "Source: Meteorological Service Singapore & Housing and Development Board"
+  ) +
+  
+  # Adjust theme elements
+  theme(
+    plot.title = element_text(size = 16, face = "bold", margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, color = "gray30", margin = margin(b = 20)),
+    legend.position = "right",
+    legend.box = "vertical",
+    legend.margin = margin(t = 10, r = 0, b = 10, l = 0),
+    plot.margin = unit(c(0, 0, 0, 0), "cm"),
+    text = element_text(size = 10),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    axis.title = element_blank()
+  ) +
+  
+  # Guides for color and size
+  guides(
+    color = guide_legend(override.aes = list(size = 5)),
+    size = guide_legend(override.aes = list(color = "gray30"))
+  ) +
+  
+   # Add north arrow and scale bar
+  annotation_north_arrow(
+    location = "bl", which_north = "true",
+    pad_x = unit(0.4, "in"), pad_y = unit(0.15, "in"),
+    style = north_arrow_fancy_orienteering
+  ) +
+  annotation_scale(location = "bl", width_hint = 0.3, pad_x = unit(0.1, "in"), pad_y = unit(0.05, "in")) +
+  
+  # Set coordinate limits
+  coord_sf(xlim = c(103.58, 104.1), ylim = c(1.15, 1.51), expand = FALSE)
 ```
 
 # Further Suggestions for Interactivity

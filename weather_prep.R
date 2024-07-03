@@ -1,0 +1,182 @@
+## -----------------------------------------------------------------------------
+#| label: setup
+#| include: false
+
+# Load necessary libraries
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(ggrepel)
+library(ggimage) # To add the icons above the labels
+library(sf)
+library(tibble)
+library(dplyr)
+library(geojsonsf)
+library(scales)
+library(viridis) # For color-blind friendly palette
+library(ggspatial) # For north arrow and scale bar
+library(leaflet) # For interactive maps
+library(stringr) # For string manipulation
+library(rvest) # For web scraping
+
+
+## -----------------------------------------------------------------------------
+weather_data <- read_excel("full_year_weather_data.xlsx")
+sg_coords <- read_csv("singapore_city_coordinates_improved.csv")
+
+
+## -----------------------------------------------------------------------------
+# Add the year to the date entries and convert to datetime format
+weather_data <- weather_data %>%
+  mutate(Date = as.Date(paste(Date, "2023"), format = "%d %b %Y"))
+
+# Convert Daily Rainfall Total to numeric, forcing non-numeric values to NA
+weather_data <- weather_data %>%
+  mutate(`Daily Rainfall Total (mm)` = as.numeric(`Daily Rainfall Total (mm)`))
+
+# Remove rows with NA values in the Daily Rainfall Total column
+weather_data <- weather_data %>%
+  filter(!is.na(`Daily Rainfall Total (mm)`))
+
+
+## -----------------------------------------------------------------------------
+sg_coords <- sg_coords |>
+  select(place = `Place`, city = `City`, y = `latitude`, x = `longitude`)
+
+# Join on the "city" column
+join_city <- weather_data %>%
+  left_join(sg_coords, by = c("Location" = "city"))
+
+# Join on the "place" column
+join_place <- weather_data %>%
+  left_join(sg_coords, by = c("Location" = "place"))
+
+
+# Combine the results
+combined_weather_data <- bind_rows(
+  join_city %>% filter(!is.na(x) & !is.na(y)),
+  join_place %>% filter(!is.na(x) & !is.na(y))
+)
+
+combined_weather_data
+
+
+## -----------------------------------------------------------------------------
+# View the cleaned data
+head(combined_weather_data)
+
+
+## -----------------------------------------------------------------------------
+weather_total_rainfall <- combined_weather_data |>
+  select(location = `Location`, date = `Date`, `Daily Rainfall Total (mm)`, x, y) |>
+  mutate(date = format(date, "%Y-%m")) |>
+  summarise(total_rainfall = sum(`Daily Rainfall Total (mm)`, na.rm = TRUE), .by = c(location, date, x, y))
+
+wettest <- weather_total_rainfall |>
+  slice_max(total_rainfall, n = 10, with_ties = FALSE)
+
+driest <- weather_total_rainfall |>
+  slice_min(total_rainfall, n = 10, with_ties = FALSE)
+
+wettest
+driest
+
+
+## -----------------------------------------------------------------------------
+weather_temperature <- combined_weather_data |>
+  select(location = `Location`, date = `Date`, temp = `Mean Temperature (°C)`, x, y) |>
+  mutate(date = format(date, "%Y-%m"), temp = as.numeric(temp)) |>
+  summarise(mean_temperature = mean(temp, na.rm = TRUE), .by = c(location, date, x, y))
+
+hottest <- weather_temperature |>
+  slice_max(mean_temperature, n = 10, with_ties = FALSE)
+
+coolest <- weather_temperature |>
+  slice_min(mean_temperature, n = 10, with_ties = FALSE)
+
+hottest
+coolest
+
+
+## -----------------------------------------------------------------------------
+weather_wind_speed <- combined_weather_data |> 
+  select(location = `Location`, date = `Date`, wind_speed = `Max Wind Speed (km/h)`, x, y) |>
+  mutate(date = format(date, "%Y-%m"), wind_speed = as.numeric(wind_speed))
+
+weather_wind_speed <- weather_wind_speed |> 
+  slice_max(wind_speed, n = 10, with_ties = FALSE)
+
+weather_wind_speed
+
+
+## -----------------------------------------------------------------------------
+combined_extremes <- bind_rows(
+  wettest %>% mutate(event = "Wettest", amount = total_rainfall),
+  driest %>% mutate(event = "Driest", amount = total_rainfall),
+  hottest %>% mutate(event = "Temperature (Hot)", amount = mean_temperature),
+  coolest %>% mutate(event = "Temperature (Cool)", amount = mean_temperature),
+  weather_wind_speed %>% mutate(event = "Wind Speed", amount = wind_speed)
+)
+
+combined_extremes
+
+
+## -----------------------------------------------------------------------------
+# Custom color palette
+event_colors <- c(
+  "Wettest" = "#7a47cc",
+  "Driest" = "#e3d345",
+  "Temperature (Cool)" = "#65d8e7",
+  "Temperature (Hot)" = "#d73027",
+  "Wind Speed" = "#71cfab"
+)
+
+wettest_date <-
+  combined_extremes |>
+  slice_max(total_rainfall, n = 1, with_ties = FALSE) |>
+  mutate(event = "Wettest", amount = total_rainfall)
+
+driest_date <-
+  combined_extremes |>
+  slice_min(total_rainfall, n = 1, with_ties = FALSE) |>
+  mutate(event = "Driest", amount = total_rainfall)
+
+hottest_date <-
+  combined_extremes |>
+  slice_max(mean_temperature, n = 1, with_ties = FALSE) |>
+  mutate(event = "Hottest Mean Temp", amount = mean_temperature)
+
+coolest_date <-
+  combined_extremes |>
+  slice_min(mean_temperature, n = 1, with_ties = FALSE) |>
+  mutate(event = "Coldest Mean Temp", amount = mean_temperature)
+
+strongest_wind_gust <-
+  combined_extremes |>
+  slice_max(wind_speed, n = 1, with_ties = FALSE) |>
+  mutate(event = "Highest Wind Speed", amount = wind_speed)
+
+labels <- bind_rows(
+  wettest_date, 
+  driest_date, 
+  hottest_date, 
+  coolest_date, 
+  strongest_wind_gust
+) |>
+  mutate(
+    unit = c("mm", "mm", "°C", "°C", "km/h"),
+    icon = c(
+      "icons/rainfall_icon.png",
+      "icons/dry_icon.png",
+      "icons/sun_icon.png",
+      "icons/cool_temperature_icon.png",
+      "icons/wind_icon.png"
+    ), # Order: Wettest, Driest, Hottest, Coolest, Windiest
+    nudge_x_icon = c(0.096, 0.065, 0.129, 0.047, -0.074),
+    nudge_y_icon = c(0.102, -0.127, -0.084, 0.125, 0.090),
+    nudge_x_repel = c(0.07, 0.053, 0.081, 0.008, -0.155),
+    nudge_y_repel = c(0.078, -0.096, -0.069, 0.13, 0.07)
+  )
+
+labels
+
